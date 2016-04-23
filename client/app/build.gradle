@@ -1,0 +1,34 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+
+    defaultConfig {
+        applicationId "com.cardapio.vdias.cardapiounicamp"
+        minSdkVersion 9
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    classpath 'com.android.tools.build:gradle:2.4'
+    compile 'com.microsoft.azure:azure-notifications-handler:1.0.1@aar'
+    compile 'com.android.support:appcompat-v7:23.+'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+}
+
+repositories {
+    maven {
+        url "http://dl.bintray.com/microsoftazuremobile/SDK"
+    }
+}
