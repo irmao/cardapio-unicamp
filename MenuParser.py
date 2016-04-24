@@ -18,7 +18,7 @@ class MenuParser(HTMLParser):
             self._openTags.push(tag)
             state = self._stateMachine.get_current_state()
             if  state > MenuStateMachine.STATE_TITLES_TABLE and state < MenuStateMachine.STATE_DONE:
-                self._output_buffer += "-------------------------%s-------------------------\n" % StateMachineHandler.to_string(state)
+                self._output_buffer += "\n-------------------------%s-------------------------\n" % StateMachineHandler.to_string(state)
             self._stateMachine.go_to_next_state()
 
     def handle_endtag(self, tag):
@@ -26,7 +26,11 @@ class MenuParser(HTMLParser):
 
     def handle_data(self, data):
         state = self._stateMachine.get_current_state()
-        if state > MenuStateMachine.STATE_TITLES_TABLE+1 and state < MenuStateMachine.STATE_DONE+1:
+        if state == MenuStateMachine.STATE_MENU_TITLE+1:
+            data = data.strip()
+            if data and not data.isspace():
+                self._output_buffer += '%s\n\n' % data
+        elif state > MenuStateMachine.STATE_TITLES_TABLE+1 and state < MenuStateMachine.STATE_DONE+1:
             data = data.strip()
             if data and not data.isspace():
                 self._output_buffer += data + '\n'
